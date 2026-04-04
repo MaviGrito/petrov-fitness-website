@@ -1,0 +1,85 @@
+---
+import type { Service } from '../../data/services.ts';
+import CalComPopup from '../shared/CalComPopup.astro';
+
+interface Props {
+  service: Service;
+}
+
+const { service } = Astro.props;
+
+const icons: Record<string, string> = {
+  dumbbell: `<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M4 8h2M4 8v8M4 8H2m2 8h2m-2 0H2m2 0v-8M20 8h-2M20 8v8M20 8h2m-2 8h-2m2 0h2m-2 0v-8M8 12h8" /></svg>`,
+  laptop: `<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9.75 17L9 20l-1 1h8l-1-1-.75-3M3 13h18M5 17h14a2 2 0 002-2V5a2 2 0 00-2-2H5a2 2 0 00-2 2v10a2 2 0 002 2z" /></svg>`,
+  'boxing-glove': `<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 12l2 2 4-4M7.835 4.697a3.42 3.42 0 001.946-.806 3.42 3.42 0 014.438 0 3.42 3.42 0 001.946.806 3.42 3.42 0 013.138 3.138 3.42 3.42 0 00.806 1.946 3.42 3.42 0 010 4.438 3.42 3.42 0 00-.806 1.946 3.42 3.42 0 01-3.138 3.138 3.42 3.42 0 00-1.946.806 3.42 3.42 0 01-4.438 0 3.42 3.42 0 00-1.946-.806 3.42 3.42 0 01-3.138-3.138 3.42 3.42 0 00-.806-1.946 3.42 3.42 0 010-4.438 3.42 3.42 0 00.806-1.946 3.42 3.42 0 013.138-3.138z" /></svg>`,
+  chart: `<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M9 19v-6a2 2 0 00-2-2H5a2 2 0 00-2 2v6a2 2 0 002 2h2a2 2 0 002-2zm0 0V9a2 2 0 012-2h2a2 2 0 012 2v10m-6 0a2 2 0 002 2h2a2 2 0 002-2m0 0V5a2 2 0 012-2h2a2 2 0 012 2v14a2 2 0 01-2 2h-2a2 2 0 01-2-2z" /></svg>`,
+  group: `<svg xmlns="http://www.w3.org/2000/svg" class="w-10 h-10" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="1.5" d="M17 20h5v-2a3 3 0 00-5.356-1.857M17 20H7m10 0v-2c0-.656-.126-1.283-.356-1.857M7 20H2v-2a3 3 0 015.356-1.857M7 20v-2c0-.656.126-1.283.356-1.857m0 0a5.002 5.002 0 019.288 0M15 7a3 3 0 11-6 0 3 3 0 016 0zm6 3a2 2 0 11-4 0 2 2 0 014 0zM7 10a2 2 0 11-4 0 2 2 0 014 0z" /></svg>`,
+};
+
+const checkIcon = `<svg xmlns="http://www.w3.org/2000/svg" class="w-5 h-5 flex-shrink-0" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true"><path stroke-linecap="round" stroke-linejoin="round" stroke-width="2.5" d="M5 13l4 4L19 7" /></svg>`;
+---
+
+<article class="bg-white rounded-2xl overflow-hidden shadow-lg border border-gray-100 flex flex-col hover:shadow-xl transition-shadow duration-300">
+  <!-- Blue accent top bar -->
+  <div class="h-1.5 bg-brand-blue"></div>
+
+  <div class="p-8 flex flex-col flex-1">
+    <!-- Icon + Name -->
+    <div class="flex items-start gap-4 mb-4">
+      <div class="text-brand-blue flex-shrink-0" set:html={icons[service.icon] ?? icons['dumbbell']} />
+      <h3 class="font-heading font-bold text-xl md:text-2xl uppercase tracking-tight text-brand-black leading-tight">
+        {service.name}
+      </h3>
+    </div>
+
+    <!-- Description -->
+    <p class="font-body text-gray-600 leading-relaxed mb-6">
+      {service.description}
+    </p>
+
+    <!-- Duration + Modality badges -->
+    <div class="flex flex-wrap gap-2 mb-6">
+      <span class="inline-flex items-center gap-1.5 bg-brand-blue/10 text-brand-blue font-body text-xs font-semibold px-3 py-1.5 rounded-full">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8v4l3 3m6-3a9 9 0 11-18 0 9 9 0 0118 0z" />
+        </svg>
+        {service.duration}
+      </span>
+      <span class="inline-flex items-center gap-1.5 bg-gray-100 text-gray-600 font-body text-xs font-semibold px-3 py-1.5 rounded-full">
+        <svg xmlns="http://www.w3.org/2000/svg" class="w-3.5 h-3.5" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M17.657 16.657L13.414 20.9a1.998 1.998 0 01-2.827 0l-4.244-4.243a8 8 0 1111.314 0z" />
+          <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M15 11a3 3 0 11-6 0 3 3 0 016 0z" />
+        </svg>
+        {service.modality}
+      </span>
+    </div>
+
+    <!-- Features list -->
+    <div class="mb-8 flex-1">
+      <h4 class="font-heading font-bold text-xs uppercase tracking-widest text-brand-blue mb-3">
+        What's Included
+      </h4>
+      <ul class="space-y-2">
+        {service.features.map(feature => (
+          <li class="flex items-start gap-2 font-body text-sm text-gray-700">
+            <span class="text-brand-yellow mt-0.5" set:html={checkIcon} />
+            {feature}
+          </li>
+        ))}
+      </ul>
+    </div>
+
+    <!-- CTA -->
+    <div class="mt-auto">
+      <CalComPopup
+        calLink={`mikhail-petrov/${service.calEventType}`}
+        label="Book a Session"
+        variant="primary"
+        class="w-full justify-center"
+      />
+      <p class="text-center font-body text-xs text-gray-400 mt-3">
+        Contact for Pricing
+      </p>
+    </div>
+  </div>
+</article>

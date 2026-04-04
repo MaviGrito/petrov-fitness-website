@@ -1,0 +1,45 @@
+---
+import Layout from './Layout.astro';
+
+interface Props {
+  title: string;
+  description: string;
+  pageTitle: string;
+  pageSubtitle?: string;
+  image?: string;
+  schema?: object;
+}
+
+const { title, description, pageTitle, pageSubtitle, image, schema } = Astro.props;
+---
+
+<Layout title={title} description={description} image={image} schema={schema}>
+  <!-- Inner page hero -->
+  <section class="bg-brand-black py-16 md:py-24 border-b border-white/10">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <!-- Breadcrumb -->
+      <nav aria-label="Breadcrumb" class="mb-6">
+        <ol class="flex items-center gap-2 text-sm font-body text-white/50">
+          <li>
+            <a href="/" class="hover:text-brand-yellow transition-colors duration-200">Home</a>
+          </li>
+          <li aria-hidden="true" class="text-white/30">/</li>
+          <li class="text-brand-yellow font-medium" aria-current="page">{pageTitle}</li>
+        </ol>
+      </nav>
+
+      <!-- Page title -->
+      <h1 class="font-heading font-bold text-4xl md:text-5xl lg:text-6xl text-white uppercase tracking-tight">
+        {pageTitle}
+      </h1>
+      {pageSubtitle && (
+        <p class="mt-4 text-white/70 font-body text-lg md:text-xl max-w-2xl">
+          {pageSubtitle}
+        </p>
+      )}
+    </div>
+  </section>
+
+  <!-- Page content -->
+  <slot />
+</Layout>

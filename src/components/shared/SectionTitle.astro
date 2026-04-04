@@ -1,0 +1,31 @@
+---
+interface Props {
+  title: string;
+  subtitle?: string;
+  align?: 'left' | 'center';
+  light?: boolean;  // true = white text (for dark backgrounds)
+  tag?: string;     // optional eyebrow tag above title
+}
+
+const { title, subtitle, align = 'center', light = false, tag } = Astro.props;
+const alignClass = align === 'center' ? 'text-center' : 'text-left';
+const titleColor = light ? 'text-white' : 'text-brand-black';
+const subtitleColor = light ? 'text-white/70' : 'text-gray-600';
+const tagColor = light ? 'text-brand-yellow' : 'text-brand-blue';
+---
+
+<div class={`${alignClass} mb-12`}>
+  {tag && (
+    <span class={`font-heading font-bold text-xs uppercase tracking-widest ${tagColor} mb-3 block`}>
+      {tag}
+    </span>
+  )}
+  <h2 class={`font-heading font-bold text-3xl md:text-4xl lg:text-5xl uppercase tracking-tight ${titleColor}`}>
+    {title}
+  </h2>
+  {subtitle && (
+    <p class={`mt-4 font-body text-lg md:text-xl max-w-2xl ${align === 'center' ? 'mx-auto' : ''} ${subtitleColor}`}>
+      {subtitle}
+    </p>
+  )}
+</div>

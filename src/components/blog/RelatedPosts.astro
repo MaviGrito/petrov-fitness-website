@@ -1,0 +1,28 @@
+---
+import { getRelatedPosts, type BlogPostData } from '../../utils/blog';
+import BlogCard from './BlogCard.astro';
+
+interface Props {
+  currentPost: BlogPostData;
+  allPosts: BlogPostData[];
+}
+
+const { currentPost, allPosts } = Astro.props;
+const related = getRelatedPosts(currentPost, allPosts, 3);
+---
+
+{related.length > 0 && (
+  <section aria-label="Related posts">
+    <h2 class="font-heading font-black text-2xl uppercase tracking-tight text-brand-black mb-8">
+      You might also like...
+    </h2>
+    <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+      {related.map((post) => (
+        <BlogCard post={{
+          slug: post.slug,
+          data: post as any,
+        }} />
+      ))}
+    </div>
+  </section>
+)}

@@ -1,0 +1,79 @@
+---
+import PageLayout from '../layouts/PageLayout.astro';
+import ServiceCard from '../components/services/ServiceCard.astro';
+import FAQSection from '../components/services/FAQSection.astro';
+import CTASection from '../components/shared/CTASection.astro';
+import { services } from '../data/services.ts';
+
+const schema = {
+  "@context": "https://schema.org",
+  "@type": "Service",
+  "serviceType": "Personal Training",
+  "provider": {
+    "@type": "LocalBusiness",
+    "name": "Petrov Fitness",
+    "url": "https://petrovfitness.com.au"
+  },
+  "areaServed": {
+    "@type": "City",
+    "name": "Adelaide",
+    "containedIn": "South Australia, Australia"
+  },
+  "hasOfferCatalog": {
+    "@type": "OfferCatalog",
+    "name": "Personal Training Services",
+    "itemListElement": [
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "1-on-1 Personal Training" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Online Coaching" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Boxing Fitness Classes" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Body Composition Assessment" } },
+      { "@type": "Offer", "itemOffered": { "@type": "Service", "name": "Group Training" } }
+    ]
+  }
+};
+---
+
+<PageLayout
+  title="Personal Training Services Adelaide | Mikhail Petrov - Petrov Fitness"
+  description="Explore Petrov Fitness personal training services in Adelaide: 1-on-1 PT, online coaching, boxing fitness classes, body composition assessments, and group training."
+  pageTitle="Training Services"
+  pageSubtitle="Personalised Training Solutions for Your Goals"
+  schema={schema}
+>
+  <!-- Services grid -->
+  <section class="bg-gray-50 py-20 md:py-28">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <div class="text-center mb-14">
+        <span class="font-heading font-bold text-xs uppercase tracking-widest text-brand-blue mb-3 block">
+          Choose Your Path
+        </span>
+        <h2 class="font-heading font-bold text-3xl md:text-4xl lg:text-5xl uppercase tracking-tight text-brand-black">
+          All Services
+        </h2>
+        <p class="mt-4 font-body text-lg text-gray-600 max-w-2xl mx-auto">
+          Every service is designed to get you real, lasting results — tailored to your goals, schedule, and lifestyle.
+        </p>
+      </div>
+
+      <!-- 2-col desktop, 1-col mobile grid -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-8">
+        {services.map(service => (
+          <ServiceCard service={service} />
+        ))}
+      </div>
+    </div>
+  </section>
+
+  <!-- FAQ Section -->
+  <FAQSection />
+
+  <!-- CTA Section -->
+  <CTASection
+    title="Ready to Start Training?"
+    subtitle="Book your first session today and take the first step towards your goals"
+    badge="50% OFF First Session"
+    bgColor="yellow"
+    ctaLabel="Book First Session (50% OFF)"
+    calLink="mikhail-petrov/first-pt-session"
+  />
+</PageLayout>

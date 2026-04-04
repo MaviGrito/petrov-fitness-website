@@ -1,0 +1,73 @@
+---
+interface Props {
+  categories: string[];
+  activeCategory?: string;
+}
+
+const { categories, activeCategory = 'All' } = Astro.props;
+---
+
+<div class="flex flex-wrap gap-2 justify-center" role="group" aria-label="Filter posts by category">
+  <button
+    class="filter-btn font-heading font-bold text-sm uppercase tracking-wide px-4 py-2 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-yellow focus:ring-offset-2"
+    data-filter="All"
+    aria-pressed={activeCategory === 'All' ? 'true' : 'false'}
+  >
+    All Posts
+  </button>
+
+  {categories.map((category) => (
+    <button
+      class="filter-btn font-heading font-bold text-sm uppercase tracking-wide px-4 py-2 rounded-full transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-brand-yellow focus:ring-offset-2"
+      data-filter={category}
+      aria-pressed={activeCategory === category ? 'true' : 'false'}
+    >
+      {category}
+    </button>
+  ))}
+</div>
+
+<script>
+  function initBlogFilter() {
+    const filterButtons = document.querySelectorAll<HTMLButtonElement>('.filter-btn');
+    const blogCards = document.querySelectorAll<HTMLElement>('[data-category]');
+
+    function setActiveButton(activeFilter: string) {
+      filterButtons.forEach((btn) => {
+        const isActive = btn.dataset.filter === activeFilter;
+        btn.setAttribute('aria-pressed', isActive ? 'true' : 'false');
+        if (isActive) {
+          btn.classList.add('bg-brand-yellow', 'text-brand-black');
+          btn.classList.remove('bg-gray-100', 'text-gray-700', 'hover:bg-brand-yellow', 'hover:text-brand-black');
+        } else {
+          btn.classList.remove('bg-brand-yellow', 'text-brand-black');
+          btn.classList.add('bg-gray-100', 'text-gray-700', 'hover:bg-brand-yellow', 'hover:text-brand-black');
+        }
+      });
+    }
+
+    function filterCards(category: string) {
+      blogCards.forEach((card) => {
+        if (category === 'All' || card.dataset.category === category) {
+          card.style.display = '';
+        } else {
+          card.style.display = 'none';
+        }
+      });
+    }
+
+    // Set initial state
+    setActiveButton('All');
+
+    filterButtons.forEach((btn) => {
+      btn.addEventListener('click', () => {
+        const filter = btn.dataset.filter || 'All';
+        setActiveButton(filter);
+        filterCards(filter);
+      });
+    });
+  }
+
+  // Run on page load
+  initBlogFilter();
+</script>

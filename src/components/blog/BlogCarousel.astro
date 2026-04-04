@@ -1,0 +1,88 @@
+---
+interface CarouselImage {
+  image: string;
+  caption?: string;
+}
+
+interface Props {
+  images: CarouselImage[];
+  title: string;
+}
+
+const { images, title } = Astro.props;
+
+// Only render if images array is non-empty
+if (!images || images.length === 0) {
+  return;
+}
+
+const carouselId = `carousel-${Math.random().toString(36).slice(2, 9)}`;
+---
+
+{images && images.length > 0 && (
+  <div class="blog-carousel-wrapper my-8">
+    <div id={carouselId} class="swiper rounded-lg overflow-hidden shadow-lg">
+      <div class="swiper-wrapper">
+        {images.map((item, index) => (
+          <div class="swiper-slide">
+            <figure class="relative">
+              <img
+                src={item.image}
+                alt={item.caption || `${title} - image ${index + 1}`}
+                loading="lazy"
+                width="800"
+                height="450"
+                class="w-full object-cover aspect-video"
+              />
+              {item.caption && (
+                <figcaption class="absolute bottom-0 left-0 right-0 bg-black/60 text-white font-body text-sm px-4 py-2 text-center">
+                  {item.caption}
+                </figcaption>
+              )}
+            </figure>
+          </div>
+        ))}
+      </div>
+
+      <!-- Navigation arrows -->
+      <div class="swiper-button-prev" aria-label="Previous slide"></div>
+      <div class="swiper-button-next" aria-label="Next slide"></div>
+
+      <!-- Pagination dots -->
+      <div class="swiper-pagination"></div>
+    </div>
+  </div>
+)}
+
+<style>
+  .swiper-button-prev,
+  .swiper-button-next {
+    color: #e1c340;
+  }
+  .swiper-pagination-bullet-active {
+    background: #e1c340;
+  }
+</style>
+
+<script>
+  import Swiper from 'swiper';
+  import { Navigation, Pagination } from 'swiper/modules';
+  import 'swiper/css';
+  import 'swiper/css/navigation';
+  import 'swiper/css/pagination';
+
+  document.querySelectorAll<HTMLElement>('.blog-carousel-wrapper .swiper').forEach((el) => {
+    new Swiper(el, {
+      modules: [Navigation, Pagination],
+      loop: true,
+      navigation: {
+        nextEl: el.querySelector('.swiper-button-next') as HTMLElement,
+        prevEl: el.querySelector('.swiper-button-prev') as HTMLElement,
+      },
+      pagination: {
+        el: el.querySelector('.swiper-pagination') as HTMLElement,
+        clickable: true,
+      },
+    });
+  });
+</script>

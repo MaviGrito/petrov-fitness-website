@@ -1,0 +1,55 @@
+---
+import { getCollection } from 'astro:content';
+import PageLayout from '../layouts/PageLayout.astro';
+import BlogCard from '../components/blog/BlogCard.astro';
+import BlogFilter from '../components/blog/BlogFilter.astro';
+import { sortPostsByDate } from '../utils/blog';
+import { BLOG_CATEGORIES } from '../content/config';
+
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const sortedPosts = sortPostsByDate(allPosts.map(post => ({
+  slug: post.slug,
+  data: post.data,
+  category: post.data.category,
+  date: post.data.date,
+})));
+
+// Re-map to full post objects in sorted order
+const postMap = new Map(allPosts.map(p => [p.slug, p]));
+const posts = sortedPosts.map(p => postMap.get(p.slug)!).filter(Boolean);
+
+const categories = [...BLOG_CATEGORIES];
+---
+
+<PageLayout
+  title="Fitness Blog | Training Tips & Workout Advice - Petrov Fitness Adelaide"
+  description="Expert fitness tips, workout guides, nutrition advice and boxing training insights from Adelaide personal trainer Mikhail Petrov."
+  pageTitle="Fitness Blog"
+  pageSubtitle="Training tips, nutrition advice, and fitness insights from Adelaide's top personal trainer."
+>
+  <!-- Filter section -->
+  <section class="bg-white border-b border-gray-100 py-8">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      <BlogFilter categories={categories} />
+    </div>
+  </section>
+
+  <!-- Blog grid -->
+  <section class="bg-white py-12 md:py-16">
+    <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+      {posts.length === 0 ? (
+        <div class="text-center py-16">
+          <p class="font-body text-gray-500 text-lg">No posts published yet. Check back soon!</p>
+        </div>
+      ) : (
+        <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-8">
+          {posts.map((post) => (
+            <div data-category={post.data.category}>
+              <BlogCard post={post} />
+            </div>
+          ))}
+        </div>
+      )}
+    </div>
+  </section>
+</PageLayout>

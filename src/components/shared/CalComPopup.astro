@@ -1,0 +1,22 @@
+---
+interface Props {
+  calLink: string;   // e.g. "mikhail-petrov/first-pt-session"
+  label: string;
+  variant?: 'primary' | 'secondary';
+  class?: string;
+}
+const { calLink, label, variant = 'primary', class: className = '' } = Astro.props;
+
+const baseClasses = 'inline-flex items-center justify-center font-heading font-bold text-sm uppercase tracking-wide px-6 py-3 rounded transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-offset-2';
+const variantClasses = variant === 'primary'
+  ? 'bg-brand-yellow text-brand-black hover:bg-yellow-400 focus:ring-brand-yellow'
+  : 'border-2 border-white text-white hover:bg-white hover:text-brand-black focus:ring-white';
+---
+
+<button
+  data-cal-link={calLink}
+  data-cal-config={JSON.stringify({ theme: "dark", brandColor: "#e1c340" })}
+  class={`${baseClasses} ${variantClasses} ${className}`}
+>
+  {label}
+</button>

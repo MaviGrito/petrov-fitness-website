@@ -1,0 +1,83 @@
+---
+const stats = [
+  { value: 5, suffix: '+', label: 'Years Experience' },
+  { value: 150, suffix: '+', label: 'Clients Trained' },
+  { value: 1000, suffix: '+', label: 'Training Hours' },
+  { value: 98, suffix: '%', label: 'Satisfaction Rate' },
+];
+---
+
+<section class="bg-brand-yellow py-16 md:py-20">
+  <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
+    <div class="grid grid-cols-2 lg:grid-cols-4 gap-8 md:gap-12">
+      {stats.map((stat, index) => (
+        <div class="text-center">
+          <div class="font-heading font-black text-5xl md:text-6xl lg:text-7xl text-brand-black leading-none mb-2">
+            <span
+              class="stat-number"
+              data-target={stat.value}
+              data-suffix={stat.suffix}
+              aria-label={`${stat.value}${stat.suffix} ${stat.label}`}
+            >
+              0{stat.suffix}
+            </span>
+          </div>
+          <p class="font-body font-semibold text-sm md:text-base uppercase tracking-widest text-brand-black/70">
+            {stat.label}
+          </p>
+        </div>
+      ))}
+    </div>
+  </div>
+</section>
+
+<script>
+  function animateCounter(el: Element) {
+    const target = parseInt(el.getAttribute('data-target') || '0', 10);
+    const suffix = el.getAttribute('data-suffix') || '';
+    const duration = 1500; // ms
+    const startTime = performance.now();
+
+    function update(currentTime: number) {
+      const elapsed = currentTime - startTime;
+      const progress = Math.min(elapsed / duration, 1);
+      // Ease out cubic
+      const eased = 1 - Math.pow(1 - progress, 3);
+      const current = Math.round(eased * target);
+      el.textContent = current + suffix;
+
+      if (progress < 1) {
+        requestAnimationFrame(update);
+      } else {
+        el.textContent = target + suffix;
+      }
+    }
+
+    requestAnimationFrame(update);
+  }
+
+  const counters = document.querySelectorAll('.stat-number');
+
+  if ('IntersectionObserver' in window) {
+    const observer = new IntersectionObserver(
+      (entries) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            animateCounter(entry.target);
+            observer.unobserve(entry.target);
+          }
+        });
+      },
+      { threshold: 0.3 }
+    );
+
+    counters.forEach(counter => observer.observe(counter));
+  } else {
+    // Fallback: show final values immediately
+    counters.forEach(counter => {
+      const target = counter.getAttribute('data-target') || '0';
+      const suffix = counter.getAttribute('data-suffix') || '';
+      counter.textContent = target + suffix;
+    });
+  }
+</script>

@@ -1,0 +1,116 @@
+---
+import { getCollection } from 'astro:content';
+import BlogLayout from '../../layouts/BlogLayout.astro';
+import BlogCarousel from '../../components/blog/BlogCarousel.astro';
+import ShareButtons from '../../components/blog/ShareButtons.astro';
+import AuthorBio from '../../components/blog/AuthorBio.astro';
+import RelatedPosts from '../../components/blog/RelatedPosts.astro';
+import CTASection from '../../components/shared/CTASection.astro';
+
+export async function getStaticPaths() {
+  const posts = await getCollection('blog', ({ data }) => !data.draft);
+  return posts.map(post => ({
+    params: { slug: post.slug },
+    props: { post },
+  }));
+}
+
+const { post } = Astro.props;
+const { Content } = await post.render();
+const allPosts = await getCollection('blog', ({ data }) => !data.draft);
+const siteURL = 'https://petrovfitness.com.au';
+const postURL = `${siteURL}/blog/${post.slug}`;
+---
+
+<BlogLayout
+  title={`${post.data.title} | Mikhail Petrov - Adelaide Personal Trainer`}
+  description={post.data.excerpt}
+  post={post.data}
+  image={post.data.featured_image}
+>
+  <!-- Post title -->
+  <div class="bg-brand-black py-8">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8">
+      <h1 class="font-heading font-black text-3xl md:text-4xl lg:text-5xl uppercase tracking-tight text-white">
+        {post.data.title}
+      </h1>
+    </div>
+  </div>
+
+  <!-- Share buttons (top) -->
+  <div class="bg-white border-b border-gray-100">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-4">
+      <ShareButtons url={postURL} title={post.data.title} />
+    </div>
+  </div>
+
+  <!-- Carousel (if available) -->
+  {post.data.carousel_images && post.data.carousel_images.length > 0 && (
+    <div class="bg-white">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-8">
+        <BlogCarousel images={post.data.carousel_images} title={post.data.title} />
+      </div>
+    </div>
+  )}
+
+  <!-- Post content (rendered by BlogLayout slot) -->
+  <div class="bg-white">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <div class="prose prose-lg prose-gray max-w-none
+        prose-headings:font-heading prose-headings:font-bold prose-headings:text-brand-black
+        prose-a:text-brand-blue prose-a:no-underline hover:prose-a:underline
+        prose-strong:text-brand-black
+        prose-img:rounded-lg prose-img:shadow-md">
+        <Content />
+      </div>
+    </div>
+  </div>
+
+  <!-- Tags -->
+  {post.data.tags && post.data.tags.length > 0 && (
+    <div class="bg-white border-t border-gray-100">
+      <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+        <div class="flex flex-wrap gap-2">
+          {post.data.tags.map(tag => (
+            <span class="bg-gray-100 text-gray-600 font-body text-xs px-3 py-1.5 rounded-full">
+              #{tag}
+            </span>
+          ))}
+        </div>
+      </div>
+    </div>
+  )}
+
+  <!-- Share buttons (bottom) -->
+  <div class="bg-white border-t border-gray-100">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-6">
+      <ShareButtons url={postURL} title={post.data.title} />
+    </div>
+  </div>
+
+  <!-- Author bio -->
+  <div class="bg-gray-50 border-t border-gray-200">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <AuthorBio />
+    </div>
+  </div>
+
+  <!-- Related posts -->
+  <div class="bg-white border-t border-gray-200">
+    <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 py-12">
+      <RelatedPosts
+        currentPost={{ slug: post.slug, category: post.data.category, date: post.data.date }}
+        allPosts={allPosts.map(p => ({ slug: p.slug, category: p.data.category, date: p.data.date }))}
+      />
+    </div>
+  </div>
+
+  <!-- Final CTA -->
+  <CTASection
+    title="Ready to Put These Tips Into Action?"
+    subtitle="Book your first PT session and start your transformation"
+    bgColor="blue"
+    ctaLabel="Book Your First Session Now"
+    calLink="mikhail-petrov/first-pt-session"
+  />
+</BlogLayout>

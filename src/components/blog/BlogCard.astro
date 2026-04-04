@@ -1,0 +1,95 @@
+---
+interface CarouselImage {
+  image: string;
+  caption?: string;
+}
+
+interface PostData {
+  title: string;
+  date: Date;
+  category: string;
+  excerpt: string;
+  featured_image: string;
+  carousel_images?: CarouselImage[];
+  tags?: string[];
+  author?: string;
+  draft?: boolean;
+}
+
+interface Props {
+  post: {
+    slug: string;
+    data: PostData;
+  };
+}
+
+const { post } = Astro.props;
+const { slug, data } = post;
+
+const formattedDate = new Date(data.date).toLocaleDateString('en-AU', {
+  year: 'numeric',
+  month: 'long',
+  day: 'numeric',
+});
+
+const excerpt = data.excerpt.length > 150
+  ? data.excerpt.slice(0, 150).trimEnd() + '...'
+  : data.excerpt;
+---
+
+<article
+  class="blog-card group bg-white rounded-lg overflow-hidden shadow-md hover:shadow-xl transition-all duration-300 hover:-translate-y-1 flex flex-col"
+  data-category={data.category}
+>
+  <!-- Featured image -->
+  <a href={`/blog/${slug}`} class="block overflow-hidden aspect-video bg-gray-100" tabindex="-1" aria-hidden="true">
+    <img
+      src={data.featured_image}
+      alt={data.title}
+      loading="lazy"
+      width="600"
+      height="338"
+      class="w-full h-full object-cover transition-transform duration-300 group-hover:scale-105"
+    />
+  </a>
+
+  <!-- Card body -->
+  <div class="flex flex-col flex-1 p-6">
+    <!-- Category badge -->
+    <span class="inline-block bg-brand-yellow text-brand-black font-heading font-bold text-xs uppercase tracking-wide px-3 py-1 rounded-full mb-3 self-start">
+      {data.category}
+    </span>
+
+    <!-- Title -->
+    <h2 class="font-heading font-black text-lg uppercase tracking-tight text-brand-black mb-2 leading-tight group-hover:text-brand-blue transition-colors duration-200">
+      <a href={`/blog/${slug}`} class="hover:underline focus:outline-none focus:underline">
+        {data.title}
+      </a>
+    </h2>
+
+    <!-- Date -->
+    <time
+      datetime={new Date(data.date).toISOString()}
+      class="font-body text-xs text-gray-500 mb-3"
+    >
+      {formattedDate}
+    </time>
+
+    <!-- Excerpt -->
+    <p class="font-body text-sm text-gray-600 leading-relaxed flex-1 mb-4">
+      {excerpt}
+    </p>
+
+    <!-- Read more link -->
+    <a
+      href={`/blog/${slug}`}
+      class="inline-flex items-center gap-1.5 font-heading font-bold text-sm uppercase tracking-wide text-brand-blue hover:text-brand-yellow transition-colors duration-200 focus:outline-none focus:underline mt-auto"
+      aria-label={`Read more about ${data.title}`}
+    >
+      Read More
+      <svg xmlns="http://www.w3.org/2000/svg" class="w-4 h-4" fill="none" viewBox="0 0 24 24" stroke="currentColor" aria-hidden="true">
+        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M9 5l7 7-7 7" />
+      </svg>
+    </a>
+  </div>
+</article>

@@ -1,0 +1,28 @@
+---
+import CalComEmbed from '../shared/CalComEmbed.astro';
+---
+
+<section id="booking" class="bg-brand-black py-20 md:py-28">
+  <div class="max-w-5xl mx-auto px-4 sm:px-6 lg:px-8">
+    <!-- Section header -->
+    <div class="text-center mb-12">
+      <span class="font-heading font-bold text-xs uppercase tracking-widest text-brand-yellow mb-3 block">
+        Get Started Today
+      </span>
+      <h2 class="font-heading font-black text-4xl md:text-5xl uppercase tracking-tight text-white mb-4">
+        Ready to Transform Your Fitness?
+      </h2>
+      <p class="font-body text-lg text-white/60 max-w-xl mx-auto">
+        Book your first PT session today and take the first step towards your goals.
+      </p>
+    </div>
+
+    <!-- Cal.com embed -->
+    <div class="rounded-2xl overflow-hidden border border-white/10">
+      <CalComEmbed
+        calLink="mikhail-petrov/free-consultation"
+        elementId="home-booking-embed"
+      />
+    </div>
+  </div>
+</section>

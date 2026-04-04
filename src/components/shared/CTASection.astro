@@ -1,0 +1,58 @@
+---
+import CalComPopup from './CalComPopup.astro';
+
+interface Props {
+  title: string;
+  subtitle?: string;
+  calLink?: string;
+  ctaLabel?: string;
+  badge?: string;
+  bgColor?: 'yellow' | 'blue' | 'black';
+  secondaryText?: string;
+}
+
+const {
+  title,
+  subtitle,
+  calLink = 'mikhail-petrov/first-pt-session',
+  ctaLabel = 'Book Your First PT Session Now',
+  badge,
+  bgColor = 'yellow',
+  secondaryText,
+} = Astro.props;
+
+const bgClasses = {
+  yellow: 'bg-brand-yellow text-brand-black',
+  blue: 'bg-brand-blue text-white',
+  black: 'bg-brand-black text-white',
+};
+const bg = bgClasses[bgColor];
+---
+
+<section class={`${bg} py-16 md:py-24`}>
+  <div class="max-w-4xl mx-auto px-4 sm:px-6 lg:px-8 text-center">
+    {badge && (
+      <span class="inline-block bg-brand-black text-brand-yellow font-heading font-bold text-xs uppercase tracking-widest px-4 py-2 rounded-full mb-6">
+        {badge}
+      </span>
+    )}
+    <h2 class="font-heading font-bold text-3xl md:text-4xl lg:text-5xl uppercase tracking-tight mb-4">
+      {title}
+    </h2>
+    {subtitle && (
+      <p class={`font-body text-lg md:text-xl mb-8 max-w-2xl mx-auto ${bgColor === 'yellow' ? 'text-black/70' : 'text-white/80'}`}>
+        {subtitle}
+      </p>
+    )}
+    <CalComPopup
+      calLink={calLink}
+      label={ctaLabel}
+      variant={bgColor === 'yellow' ? 'secondary' : 'primary'}
+    />
+    {secondaryText && (
+      <p class={`mt-4 font-body text-sm ${bgColor === 'yellow' ? 'text-black/60' : 'text-white/60'}`}>
+        {secondaryText}
+      </p>
+    )}
+  </div>
+</section>
