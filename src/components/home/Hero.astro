@@ -3,10 +3,17 @@ import CalComPopup from '../shared/CalComPopup.astro';
 ---
 
 <section class="relative min-h-screen flex items-center justify-center overflow-hidden bg-brand-black">
-  <!-- Background gradient -->
-  <div class="absolute inset-0 bg-gradient-to-br from-brand-black via-brand-black to-brand-blue opacity-90"></div>
-  <!-- Subtle texture overlay -->
-  <div class="absolute inset-0 opacity-5" style="background-image: repeating-linear-gradient(45deg, #fff 0, #fff 1px, transparent 0, transparent 50%); background-size: 20px 20px;"></div>
+  <!-- Hero background image -->
+  <img
+    src="/images/mikhail-hero.png"
+    alt="Mikhail Petrov personal trainer Adelaide"
+    loading="eager"
+    width="1920"
+    height="1080"
+    class="absolute inset-0 w-full h-full object-cover object-center"
+  />
+  <!-- Dark overlay for readability -->
+  <div class="absolute inset-0 bg-brand-black/70"></div>
 
   <div class="relative z-10 max-w-7xl mx-auto px-4 sm:px-6 lg:px-8 py-24 text-center">
     <!-- Tagline badge -->

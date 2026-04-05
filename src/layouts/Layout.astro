@@ -13,7 +13,7 @@ interface Props {
 
 const { title, description, image, canonicalURL, schema } = Astro.props;
 const siteURL = 'https://petrovfitness.com.au';
-const defaultImage = '/images/og-default.jpg';
+const defaultImage = '/images/og-default.png';
 const ogImage = image || defaultImage;
 const canonical = canonicalURL || siteURL + Astro.url.pathname;
 ---
