@@ -18,7 +18,7 @@ export async function getStaticPaths() {
 const { post } = Astro.props;
 const { Content } = await post.render();
 const allPosts = await getCollection('blog', ({ data }) => !data.draft);
-const siteURL = 'https://petrovfitness.com.au';
+const siteURL = 'https://petrovfitness.au';
 const postURL = `${siteURL}/blog/${post.slug}`;
 ---
 
