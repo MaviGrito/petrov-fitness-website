@@ -17,7 +17,7 @@ export const services: Service[] = [
     description: 'Personalised one-on-one training sessions tailored to your specific goals. Whether you\'re building muscle, losing fat, or improving athletic performance, I\'ll create a custom program just for you.',
     duration: '60 min',
     modality: 'In-person at Goodlife Clubs Payneham or Online',
-    calEventType: 'personal-training',
+    calEventType: 'first-pt-session',
     icon: 'dumbbell',
     features: [
       'Customised workout programs',
@@ -83,7 +83,7 @@ export const services: Service[] = [
     description: 'Get a comprehensive analysis of your body composition to track your progress accurately. Includes measurements, body fat percentage, and muscle mass analysis.',
     duration: '30 min',
     modality: 'In-person at Goodlife Clubs Payneham',
-    calEventType: 'body-composition-assessment',
+    calEventType: 'free-consultation',
     icon: 'chart',
     features: [
       'Detailed body scan',
@@ -104,7 +104,7 @@ export const services: Service[] = [
     description: 'Train with friends or join a motivated group. Experience the energy of group workouts while still receiving personalised attention and coaching.',
     duration: '60 min',
     modality: 'In-person at Goodlife Clubs Payneham',
-    calEventType: 'group-training',
+    calEventType: 'free-consultation',
     icon: 'group',
     features: [
       'Small group sizes (max 4-6 people)',
