@@ -28,17 +28,17 @@ const specialties = [
 ];
 ---
 
-<section class="bg-brand-blue py-20 md:py-28">
+<section class="bg-white py-20 md:py-28">
   <div class="max-w-7xl mx-auto px-4 sm:px-6 lg:px-8">
     <!-- Section header -->
     <div class="text-center mb-14">
-      <span class="font-heading font-bold text-xs uppercase tracking-widest text-brand-yellow mb-3 block">
+      <span class="font-heading font-bold text-xs uppercase tracking-widest text-brand-blue mb-3 block">
         Areas of Expertise
       </span>
-      <h2 class="font-heading font-black text-4xl md:text-5xl uppercase tracking-tight text-white">
+      <h2 class="font-heading font-black text-4xl md:text-5xl uppercase tracking-tight text-brand-black">
         My Specialties
       </h2>
-      <p class="mt-4 font-body text-lg text-white/70 max-w-2xl mx-auto">
+      <p class="mt-4 font-body text-lg text-gray-600 max-w-2xl mx-auto">
         Focused expertise across five key areas of fitness to help you achieve your specific goals.
       </p>
     </div>
@@ -46,17 +46,17 @@ const specialties = [
     <!-- Specialties grid -->
     <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
       {specialties.map((specialty, index) => (
-        <div class={`bg-white/10 border border-white/20 rounded-2xl p-8 hover:bg-white/15 transition-colors duration-300 ${index === 4 ? 'sm:col-span-2 lg:col-span-1' : ''}`}>
+        <div class={`bg-gray-50 border border-gray-200 rounded-2xl p-8 hover:border-brand-yellow hover:shadow-md transition-all duration-300 ${index === 4 ? 'sm:col-span-2 lg:col-span-1' : ''}`}>
           <!-- Icon -->
           <div class="text-brand-yellow mb-5" set:html={specialty.icon} />
 
           <!-- Title -->
-          <h3 class="font-heading font-bold text-xl uppercase tracking-wide text-white mb-3">
+          <h3 class="font-heading font-bold text-xl uppercase tracking-wide text-brand-black mb-3">
             {specialty.title}
           </h3>
 
           <!-- Description -->
-          <p class="font-body text-sm text-white/70 leading-relaxed">
+          <p class="font-body text-sm text-gray-600 leading-relaxed">
             {specialty.description}
           </p>
         </div>
