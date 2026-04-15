@@ -9,13 +9,13 @@ Create these 5 event types in your Cal.com dashboard:
 
 ### 1. First PT Session (50% OFF)
 - **Slug:** `first-pt-session`
-- **Duration:** 60 minutes
+- **Duration:** 45 minutes
 - **Description:** "Book your first personal training session at 50% off."
 - **Location:** Goodlife Clubs Payneham OR Online
 
 ### 2. Regular PT Session
 - **Slug:** `regular-pt-session`
-- **Duration:** 60 minutes
+- **Duration:** 45 minutes
 - **Location:** Goodlife Clubs Payneham
 
 ### 3. Free Consultation
@@ -31,7 +31,7 @@ Create these 5 event types in your Cal.com dashboard:
 
 ### 5. Boxing Class
 - **Slug:** `boxing-class`
-- **Duration:** 60 minutes
+- **Duration:** 45 minutes
 - **Location:** Goodlife Clubs Payneham
 
 ## Branding

@@ -188,7 +188,7 @@ const services: Service[] = [
   {
     id: 'personal-training',
     name: 'Personal Training (1-on-1)',
-    duration: '60 min',
+    duration: '45 min',
     modality: 'Goodlife Payneham o Online',
     calEventType: 'personal-training',
     // ...
