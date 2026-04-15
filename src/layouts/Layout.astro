@@ -30,6 +30,10 @@ const canonical = canonicalURL || siteURL + Astro.url.pathname;
     <!-- Canonical URL -->
     <link rel="canonical" href={canonical} />
 
+    <!-- Favicon -->
+    <link rel="icon" type="image/jpeg" href="/favicon.jpeg" />
+    <link rel="apple-touch-icon" href="/favicon.jpeg" />
+
     <!-- Google Fonts preconnect -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
